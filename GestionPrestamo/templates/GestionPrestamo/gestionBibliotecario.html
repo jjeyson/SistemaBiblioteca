@@ -1,0 +1,40 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid"> 
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Gestion de Bibliotecarios</small>
+                    </h1>
+                </div>
+            <a href="{% url 'registrarBibliotecario' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Tipo de Usuario</th>
+                            <th>DNI</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in objs %}
+                        <tr>
+                            <td>{{obj.nombreBibliotecario}}</td>
+                            <td>{{obj.apellidosBibliotecario}}</td>
+                            <td>{{obj.tipoBibliotecario_Bibliotecario.nombreTipoUsuario}}</td>
+                            <td>{{obj.DNIBibliotecario}}</td>
+                            <td><a href="{% url 'modificarBibliotecario' obj.idBibliotecario %}" class="btn btn-sm btn-primary">Modificar</a></td>
+                            <td><a href="{% url 'eliminarBibliotecario' obj.idBibliotecario %}" class="btn btn-sm btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock%}

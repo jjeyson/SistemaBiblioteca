@@ -1,0 +1,34 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid"> 
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Gestion de Etiquetas</small>
+                    </h1>
+                </div>
+            <a href="{% url 'registrarEtiquetaLibro' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Título de la Etiqueta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in objs %}
+                        <tr>
+                            <td>{{obj.tituloEtiquetaLibro}}</td>
+                            <td><a href="{% url 'modificarEtiquetaLibro' obj.idEtiquetaLibro %}" class="btn btn-sm btn-primary">Modificar</a></td>
+                            <td><a href="{% url 'eliminarEtiquetaLibro' obj.idEtiquetaLibro %}" class="btn btn-sm btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock%}

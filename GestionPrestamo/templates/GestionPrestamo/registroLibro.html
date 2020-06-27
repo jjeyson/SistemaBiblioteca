@@ -1,0 +1,77 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Registro de Libro</small>
+                    </h1>
+                </div>
+                 <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel-body">
+                            <a href="{% url 'registrarAutorLibro' %}" class="btn btn-lg btn-default">Registrar Autor</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel-body">
+                            <a href="{% url 'registrarGeneroLibro' %}" class="btn btn-lg btn-default">Registrar Género</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel-body">
+                            <a href="{% url 'registrarEtiquetaLibro' %}" class="btn btn-lg btn-default">Registrar Etiquetas</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel-body">
+                            <a href="{% url 'registrarEditorial' %}" class="btn btn-lg btn-default">Registrar Editorial</a>
+                        </div>
+                    </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group has-success">
+                    <table>
+                        <table>
+                            {{ formRegistrarLibro.as_table }}
+                        </table>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label>Cantidad de Copias: </label>
+                                        </div
+                                    ></td>
+                                    <td>
+                                        <div class="form-group">
+                                            <select class="form-control" name="cantidad" default>
+                                                {% for i in cantidadLibros %}
+                                                  {% if i == 5 %}
+                                                  <option selected="true">
+                                                          {{ i }}
+                                                  </option>
+                                                  {% else %}
+                                                    <option>
+                                                            {{ i }}
+                                                    </option>
+                                                  {% endif %}
+
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    <td>
+                                 </tr>
+                            </tbody>
+                        </table>
+                        <!--<table>
+                            {{ formRegistrarLibroInstancia.as_table }}
+                        </table>-->
+                        <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                    </table>
+                </div>
+            </form>
+        </div>
+{% endblock%}

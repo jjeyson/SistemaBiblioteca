@@ -1,0 +1,82 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+
+            <div class="container-fluid"> 
+                <div align="center">
+                    <h1 class="page-header">
+                                    Biblioteca Municipal de Trujillo <br/><small>Servicio de Acceso a la Información</small>
+                    </h1>
+                </div>
+                <div align="center">
+                    <img class="img-circle" style="width:150px; height:100px;" src="{% static 'GestionPrestamo/img/logo.jpg' %}" alt="Logo de la Biblioteca Municipal de Trujillo">
+                </div>
+                <p>
+                    <a href="{% url 'gracias' %}" class="btn btn-primary btn-lg" role="button">Algoritmo de Recomendación &raquo;</a>
+                </p>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-lg-6 text-center">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Ultimos Libros Añadidos
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-book-open fa-5x"></i></td>
+                                <td>Nombre del Libro</td>
+                                <td>01/01/2020</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-book-open fa-5x"></i></td>
+                                <td>Nombre del Libro</td>
+                                <td>01/01/2020</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <div class="col-lg-6 text-center">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            Libros màs Consultados
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre del Libro</th>
+                                    <th>Nª Veces</th>
+                                    <th>Ver Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nombre del Libro</td>
+                                    <td>40</td>
+                                    <td><button type="button" class="btn btn-lg btn-info">Detalle</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Nombre del Libro</td>
+                                    <td>38</td>
+                                    <td><button type="button" class="btn btn-lg btn-info">Detalle</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+{% endblock%}

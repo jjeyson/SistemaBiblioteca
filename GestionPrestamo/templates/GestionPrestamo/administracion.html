@@ -1,0 +1,88 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid"> 
+                <div align="center">
+                    <h1 class="page-header">
+                        Administración
+                    </h1>
+                </div>
+            </div>
+
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Bibliotecarios</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionBibliotecario' %}" class="btn btn-lg btn-success">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reservaciones</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionReservacion' %}" class="btn btn-lg btn-primary">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Editoriales</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionEditorial' %}" class="btn btn-lg btn-warning">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Idiomas</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionIdioma' %}" class="btn btn-lg btn-default">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Etiquetas</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionEtiquetaLibro' %}" class="btn btn-lg btn-default">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tipo de Usuarios</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionTipoUsuario' %}" class="btn btn-lg btn-default">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Genero de Libros</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionGeneroLibro' %}" class="btn btn-lg btn-default">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Autores</h3>
+                </div>
+                <div class="panel-body">
+                        <a href="{% url 'gestionAutorLibro' %}" class="btn btn-lg btn-default">Gestionar</a>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Paises</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{% url 'gestionPais' %}" class="btn btn-lg btn-default">Gestionar</a>
+                </div>
+            </div>
+        </div>
+{% endblock%}

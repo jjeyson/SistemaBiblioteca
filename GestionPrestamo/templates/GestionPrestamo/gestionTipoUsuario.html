@@ -1,0 +1,38 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid"> 
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Gestion de Tipo Usuarios</small>
+                    </h1>
+                </div>
+            <a href="{% url 'registrarTipoUsuario' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fecha de Creación</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in objs %}
+                        <tr>
+                            <td>{{obj.nombreTipoUsuario}}</td>
+                            <td>{{obj.fechaCreacionTipoUsuario}}</td>
+                            <td>{{obj.estadoTipoUsuario}}</td>
+                            <td><a href="{% url 'modificarTipoUsuario' obj.idTipoUsuario %}" class="btn btn-sm btn-primary">Modificar</a></td>
+                            <td><a href="{% url 'eliminarTipoUsuario' obj.idTipoUsuario %}" class="btn btn-sm btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock%}

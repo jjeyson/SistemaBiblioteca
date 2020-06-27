@@ -1,0 +1,23 @@
+<!DOCTYPE  html>
+<html>
+	<head>
+  	<title>
+            Resultado de Busqueda de Libros
+    </title>
+	</head>
+	<body>
+		<p>Estas buscando: <strong>{{query}}</strong></p>
+        {% if libro %}
+            <p>Articulos encontrados: {{libro|length}} libros</p>
+            <ul>
+                {% for l in libro%}
+                    <li>
+                        {{l.tituloLibro}} &nbsp; {{l.codigoLibro}} &nbsp; {{l.nCopias}}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No se encontraron libros</p>
+        {% endif %}   
+	</body>
+</html>

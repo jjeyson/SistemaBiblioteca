@@ -1,0 +1,29 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid"> 
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Registro de Usuario</small>
+                    </h1>
+                </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group has-success">
+                    <table>
+                        <table>
+                            {{ formRegistrarUsuario.as_table }}
+                            {{ formRegistrarUsuario.fechaNacimientoUsuario }}
+                        </table>
+                        <!--{{date|date:'Y-m-d'}}-->
+                        <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+{% endblock%}
+

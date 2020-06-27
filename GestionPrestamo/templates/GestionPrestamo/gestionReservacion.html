@@ -1,0 +1,42 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid"> 
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Gestion de Reservaciones</small>
+                    </h1>
+                </div>
+            <a href="{% url 'registrarReservacion' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Libro</th>
+                            <th>Usuario Lector</th>
+                            <th>Adquisición</th>
+                            <th>Bibliotecario</th>
+                            <th>Fecha de Retorno</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in objs %}
+                        <tr>
+                            <td>{{obj.libro_Reservacion}}</td>
+                            <td>{{obj.lector_Reservacion}}</td>
+                            <td>{{obj.tipoAdquisicionReservacion}}</td>
+                            <td>{{obj.bibliotecario_Reservacion}}</td>
+                            <td>{{obj.fechaRetornoReservacion}}</td>
+                            <td><a href="{% url 'modificarReservacion' obj.idReservacion %}" class="btn btn-sm btn-primary">Modificar</a></td>
+                            <td><a href="{% url 'eliminarReservacion' obj.idReservacion %}" class="btn btn-sm btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock%}

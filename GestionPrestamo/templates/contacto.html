@@ -1,0 +1,22 @@
+<!DOCTYPE  html>
+<html>
+	<head>
+  	<title>
+            Contactar con el Administrador
+    </title>
+	</head>
+	<body>
+		<form action="/contacto/" method="POST">{% csrf_token %}
+            <p>
+                Asunto: <input type="text" name="txt_asunto"></p>
+            </p>
+            <p>
+                Email: <input type="email" name="txt_email"></p>
+            </p>
+            <p>
+                Mensaje: <textarea name="txt_mensaje" rows="15" col="45"></textarea>
+            </p>
+            <input type="submit" value="Enviar"></input>
+        </form>
+	</body>
+</html>
