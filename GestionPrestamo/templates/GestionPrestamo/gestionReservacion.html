@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Gestion de Reservaciones</small>
@@ -27,8 +27,16 @@
                         {% for obj in objs %}
                         <tr>
                             <td>{{obj.libro_Reservacion}}</td>
-                            <td>{{obj.lector_Reservacion}}</td>
-                            <td>{{obj.tipoAdquisicionReservacion}}</td>
+                            <td>{{obj.usuario_reservacion}}</td>
+                              {% if obj.tipoAdquisicionReservacion == 'i' %}
+                                <td>Interno</td>
+                              {% endif  %}
+                              {% if obj.tipoAdquisicionReservacion == 'e' %}
+                                <td>Externo</td>
+                              {% endif  %}
+                              {% if obj.tipoAdquisicionReservacion == 'a' %}
+                                <td>Interbibliotecario</td>
+                              {% endif  %}
                             <td>{{obj.bibliotecario_Reservacion}}</td>
                             <td>{{obj.fechaRetornoReservacion}}</td>
                             <td><a href="{% url 'modificarReservacion' obj.idReservacion %}" class="btn btn-sm btn-primary">Modificar</a></td>

@@ -6,21 +6,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Trujillo, LA Libertad">
+    <meta name="author" content="Jason Rodriguez Ortiz, UPN">
 
     <script src="https://kit.fontawesome.com/c7760fb283.js" crossorigin="anonymous"></script>
     <title>Servicio de Acceso a la Información</title>
     <!-- Bootstrap 4.0 Beta -->
-    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    
+    -->
     <!-- Bootstrap Core CSS -->
     <link href="{%static 'GestionPrestamo/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{%static 'GestionPrestamo/css/micss.css' %}" rel="stylesheet">
+    <!--<link href="{%static 'GestionPrestamo/css/micss.css' %}" rel="stylesheet">-->
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">-->
-    
-     
+
+
     <!-- Custom CSS -->
     <link href="{%static 'GestionPrestamo/css/sb-admin.css' %}" rel="stylesheet">
 
@@ -30,9 +30,9 @@
     <!-- Custom Fonts -->
     <link href="{%static 'GestionPrestamo/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
     <!-- Fonts -->
-    
-     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
-     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -70,7 +70,7 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>Jason Rodriguez</strong>
+                                        <h5 class="media-heading"><strong>{{ user.username | upper }}</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Lunes 8:45 am.</p>
                                         <p>Ingeniero de Sistemas Computacionales</p>
@@ -140,8 +140,9 @@
                         </li>
                     </ul>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Jason Rodriguez <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ user.nombreUsuario }}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a>
@@ -152,12 +153,16 @@
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Configuracion</a>
                         </li>
+                        <li>
+                            <a href="{% url 'registrarUsuario' %}"><i class="fa fa-fw fa-user"></i> Regístrate</a>
+                        </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
+                            <a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
                         </li>
                     </ul>
                 </li>
+                {% endif %}
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -168,6 +173,7 @@
                     <li class="{% if request.path == '/' %}active {% endif %}">
                         <a href="{% url 'index' %}"><i class="fa fa-fw fa-bar-chart-o"></i> Inicio</a>
                     </li>
+                    {% if user.tipoAdministradorUsuario %}
                     <li class="{% if request.path == '/gestionLibro' %}active {% endif %}">
                         <a href="{% url 'gestionLibro' %}"><i class="fa fa-fw fa-table"></i> Gestion de Libro</a>
                     </li>
@@ -177,6 +183,7 @@
                     <li class="{% if request.path == '/administracion' %}active {% endif %}">
                         <a href="{% url 'administracion' %}"><i class="fa fa-fw fa-desktop"></i> Administracion</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -218,17 +225,15 @@
         <p class="m-0 mbt1">&copy; Servicio de Acceso a la Informacion - Rodriguez Ortiz  2020</p>
       </div>
 	</footer>
-    <script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    { {% load static %}}
+    <!--<script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//cdn.bootcss.com/moment.js/2.17.1/moment.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
-    
+    -->
     <!-- jQuery -->
-    <script src="{%static 'GestionPrestamo/js/myscript.js' %}"></script>
+    <!--<script src="{%static 'GestionPrestamo/js/myscript.js' %}"></script>-->
     <script src="{%static 'GestionPrestamo/js/jquery.js'%}"></script>
-    <script>
-  
-    </script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{%static 'GestionPrestamo/js/bootstrap.min.js'%}"></script>
 

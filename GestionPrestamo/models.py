@@ -4,6 +4,104 @@ import uuid # Requerida para las instancias de libros únicos
 # Create your models here.
 from time import gmtime, strftime
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
+class UsuarioManager(BaseUserManager):
+    def create_user(self, email,username,nombreUsuario,apellidosUsuario,password=None):
+        if not email:
+            raise ValueError('El usuario debe tener un correo electrónico!')
+
+        usuario = self.model(
+            username = username,
+            email = self.normalize_email(email),
+            nombreUsuario = nombreUsuario,
+            apellidosUsuario = apellidosUsuario
+        )
+        usuario.set_password(password)
+        usuario.save()
+        return usuario
+    def create_superuser(self, username, email, nombreUsuario, apellidosUsuario, password):
+        usuario = self.create_user(
+            email,
+            username=username,
+            nombreUsuario=nombreUsuario,
+            apellidosUsuario=apellidosUsuario,
+            password=password
+        )
+        usuario.tipoAdministradorUsuario = True
+        usuario.save()
+        return usuario
+
+
+class Usuario(AbstractBaseUser):
+    username= models.CharField(max_length=50, verbose_name='Nombre de Usuario', help_text="Evite colocar su mismo nombre", unique=True)
+    nombreUsuario = models.CharField(max_length=100, verbose_name='Nombre', blank=True, null=True)
+    apellidosUsuario= models.CharField(max_length=100, verbose_name='Apellidos', blank=True, null=True)
+    DNIUsuario= models.CharField(max_length=20, verbose_name='Documento de Identidad', help_text="8 digitos, incluya el cero adelante si fuese necesario. Especifique cuando no sea DNI", blank=True, null=True )
+    email= models.EmailField(max_length=50, verbose_name='Email')
+    direccionUsuario = models.CharField(max_length=250,verbose_name='Direccion',help_text="Incluya Distrito , Provincia y Pais si fuese necesario", blank=True, null=True)
+    imagenUsuario = models.ImageField(verbose_name='Imagen de Perfil', upload_to='perfil/', blank=True, null=True, max_length=200)
+    TIPO_SEXO = (
+        ('m', 'Masculino'),
+        ('f', 'Femenino'),
+    )
+    sexoUsuario= models.CharField(verbose_name='Sexo', max_length=1 , choices=TIPO_SEXO, blank=True, default='m', help_text='Seleccione el sexo del usuario')
+    telefonoUsuario = models.CharField(max_length=20, verbose_name='Telefono (Fijo o Movil)', blank=True, null=True, help_text="Ingresar un numero de celular con su codigo de pais y si es telefono con su codigo respectivo sin guiones o paréntesis")
+    fechaNacimientoUsuario= models.DateField(verbose_name='Fecha de Nacimiento', help_text="Formato d-mm-yyyy", blank=True, null=True)
+    fechaCreacionUsuario= models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Creación', blank=True, null=True)
+    tipoAdministradorUsuario= models.BooleanField(verbose_name='Administrador', default=False)
+    estadoUsuario= models.BooleanField(verbose_name='Activo', default=True)
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'nombreUsuario','apellidosUsuario']
+
+    def __str__(self):
+        return f'{self.nombreUsuario},{self.apellidosUsuario}'
+
+    def has_perm(self, perm, obj = None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+    @property
+    def is_staff(self):
+        return self.tipoAdministradorUsuario
+
+class TipoUsuario(models.Model):
+    idTipoUsuario = models.AutoField(primary_key=True, help_text="ID único para esta Tipo de Usuario")
+    nombreTipoUsuario = models.CharField(max_length=100, verbose_name='Nombre')
+    fechaCreacionTipoUsuario = models.DateTimeField(auto_now_add=True, blank=True, verbose_name='Fecha de Creacion')
+    estadoTipoUsuario = models.BooleanField(verbose_name='Activo', default=True)
+    def __str__(self):
+        """Cadena para representar el objeto Modelo (en el sitio de administración, etc.)"""
+        return self.nombreTipoUsuario
+
+
+class Lector(models.Model):
+    idLector = models.AutoField(primary_key=True, help_text="ID único para este Lector")
+    nombreLector = models.CharField(max_length=100, verbose_name='Nombre')
+    apellidosLector = models.CharField(max_length=100, verbose_name='Apellidos')
+    DNILector = models.CharField(max_length=20, verbose_name='Documento de Identidad', help_text="8 digitos, incluya el cero adelante si fuese necesario. Especifique cuando no sea DNI" )
+    emailLector = models.EmailField(max_length=50, verbose_name='Email')
+    TIPO_SEXO = (
+        ('m', 'Masculino'),
+        ('f', 'Femenino'),
+    )
+    sexoLector = models.CharField(verbose_name='Sexo', max_length=1 , choices=TIPO_SEXO, blank=True, default='m', help_text='Sexo del usuario del Lector')
+    tipoUsuario_Lector = models.ForeignKey(TipoUsuario, on_delete=models.SET_NULL, null=True)
+    usernameLector = models.CharField(max_length=50, verbose_name='Nombre de Usuario', help_text="Evite colocar su mismo nombre")
+    claveLector = models.CharField(max_length=50, verbose_name='Clave de Usuario', help_text="Incluya numeros y letras no menor a 6 caracteres")
+    fechaNacimientoLector = models.DateField(verbose_name='Fecha de Nacimiento', help_text="Formato d-mm-yyyy")
+    fechaCreacionLector = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Creación')
+    estadoLector = models.BooleanField(verbose_name='Activo', default=True)
+
+    class Meta:
+        ordering = ["fechaCreacionLector"]
+
+    def __str__(self):
+        return self.nombreLector
+
 
 class Pais(models.Model):
     """Modelo que representa un idioma (por ejemplo, inglés, francés, japonés, etc.)"""
@@ -37,7 +135,7 @@ class Idioma(models.Model):
 
 class GeneroLibro(models.Model):
     idGeneroLibro = models.AutoField(primary_key=True, help_text="ID único para esta Género")
-    tituloGeneroLibro = models.CharField(max_length=200, verbose_name='Título')
+    tituloGeneroLibro = models.CharField(max_length=200, verbose_name='Título', unique=True)
     fechaCreacionGeneroLibro = models.DateTimeField(auto_now_add=True, blank=True,verbose_name='Fecha de Creación')
     estadoGeneroLibro = models.BooleanField(verbose_name='Activo', default=True)
 
@@ -46,15 +144,6 @@ class GeneroLibro(models.Model):
     def __str__(self):
         """Cadena para representar el objeto Modelo (en el sitio de administración, etc.)"""
         return self.tituloGeneroLibro
-
-class TipoUsuario(models.Model):
-    idTipoUsuario = models.AutoField(primary_key=True, help_text="ID único para esta Tipo de Usuario")
-    nombreTipoUsuario = models.CharField(max_length=100, verbose_name='Nombre')
-    fechaCreacionTipoUsuario = models.DateTimeField(auto_now_add=True, blank=True, verbose_name='Fecha de Creacion')
-    estadoTipoUsuario = models.BooleanField(verbose_name='Activo', default=True)
-    def __str__(self):
-        """Cadena para representar el objeto Modelo (en el sitio de administración, etc.)"""
-        return self.nombreTipoUsuario
 
 class Bibliotecario(models.Model):
     idBibliotecario = models.AutoField(primary_key=True, help_text="ID único para esta usuario bibliotecario")
@@ -87,7 +176,7 @@ class Bibliotecario(models.Model):
 
 class EtiquetaLibro(models.Model):
     idEtiquetaLibro = models.AutoField(primary_key=True, help_text="ID único para esta Tag o etiqueta")
-    tituloEtiquetaLibro = models.CharField(max_length=100, verbose_name='Nombre de la nueva etiqueta')
+    tituloEtiquetaLibro = models.CharField(max_length=100, verbose_name='Nombre de la nueva etiqueta', unique=True)
     fechaCreacionEtiquetaLibro = models.DateTimeField(auto_now_add=True, blank=True, verbose_name='Fecha de Creacion')
     estadoEtiquetaLibro = models.BooleanField(verbose_name='Activo', default=True)
     class Meta:
@@ -97,37 +186,12 @@ class EtiquetaLibro(models.Model):
 
 class Editorial(models.Model):
     idEditorial = models.AutoField(primary_key=True, help_text="ID único para esta publicación")
-    tituloEditorial = models.CharField(max_length=200, verbose_name='Título')
+    tituloEditorial = models.CharField(max_length=200, verbose_name='Título', unique=True)
     descripcionEditorial = models.TextField(max_length=1000, null=True, blank=True, verbose_name='Descripcion Breve')
     fechaCreacionEditorial = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Creación')
     estadoEditorial = models.BooleanField(verbose_name='Activo', default=True)
     def __str__(self):
         return self.tituloEditorial
-
-class Lector(models.Model):
-    idLector = models.AutoField(primary_key=True, help_text="ID único para este Lector")
-    nombreLector = models.CharField(max_length=100, verbose_name='Nombre')
-    apellidosLector = models.CharField(max_length=100, verbose_name='Apellidos')
-    DNILector = models.CharField(max_length=20, verbose_name='Documento de Identidad', help_text="8 digitos, incluya el cero adelante si fuese necesario. Especifique cuando no sea DNI" )
-    emailLector = models.EmailField(max_length=50, verbose_name='Email')
-    TIPO_SEXO = (
-        ('m', 'Masculino'),
-        ('f', 'Femenino'),
-    )
-    sexoLector = models.CharField(verbose_name='Sexo', max_length=1 , choices=TIPO_SEXO, blank=True, default='m', help_text='Sexo del usuario del Lector')
-    tipoUsuario_Lector = models.ForeignKey(TipoUsuario, on_delete=models.SET_NULL, null=True)
-    usernameLector = models.CharField(max_length=50, verbose_name='Nombre de Usuario', help_text="Evite colocar su mismo nombre")
-    claveLector = models.CharField(max_length=50, verbose_name='Clave de Usuario', help_text="Incluya numeros y letras no menor a 6 caracteres")
-    fechaNacimientoLector = models.DateField(verbose_name='Fecha de Nacimiento', help_text="Formato d-mm-yyyy")
-    fechaCreacionLector = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Creación')
-    estadoLector = models.BooleanField(verbose_name='Activo', default=True)
-
-    class Meta:
-        ordering = ["fechaCreacionLector"]
-
-    def __str__(self):
-        return self.nombreLector
-
 
 class AutorLibro(models.Model):
     idAutorLibro = models.AutoField(primary_key=True, help_text="ID único para este Autor")
@@ -146,7 +210,7 @@ class AutorLibro(models.Model):
 class Libro(models.Model):
     idLibro  = models.AutoField(primary_key=True, help_text="ID único para este libro")
     codigoLibro = models.CharField(max_length=20,verbose_name='Codigo de Biblioteca' , blank=True)
-    tituloLibro = models.CharField(max_length=200,verbose_name='Titulo', help_text="Ingrese el nombre del género (p. ej. Ciencia Ficción, Poesía Francesa etc.)")
+    tituloLibro = models.CharField(max_length=200,verbose_name='Titulo', unique=True, help_text="Ingrese el nombre del género (p. ej. Ciencia Ficción, Poesía Francesa etc.)")
     etiquetaLibro_Libro = models.ManyToManyField(EtiquetaLibro, verbose_name="Tags", help_text="Seleccione los tags para este libro")
     generoLibro = models.ManyToManyField(GeneroLibro, verbose_name="Género", help_text="Seleccione un genero para este libro")
     FORMATO_LIBRO=(
@@ -208,7 +272,8 @@ class LibroInstancia(models.Model):
 class Reservacion(models.Model):
     idReservacion = models.AutoField(primary_key=True, help_text="ID único para esta publicación")
     libro_Reservacion = models.ForeignKey(LibroInstancia, on_delete=models.SET_NULL, null=True)
-    lector_Reservacion = models.ForeignKey(Lector, on_delete=models.SET_NULL, null=True)
+    usuario_reservacion = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True)
+    #lector_Reservacion = models.ForeignKey(Lector, on_delete=models.SET_NULL, null=True)
     TIPO_ADQUISICION = (
         ('i', 'interno'),
         ('e', 'externo'),

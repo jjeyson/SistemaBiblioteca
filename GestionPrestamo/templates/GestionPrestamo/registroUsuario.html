@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Registro de Usuario</small>
@@ -15,8 +15,7 @@
                 <div class="form-group has-success">
                     <table>
                         <table>
-                            {{ formRegistrarUsuario.as_table }}
-                            {{ formRegistrarUsuario.fechaNacimientoUsuario }}
+                            {{ form.as_table }}
                         </table>
                         <!--{{date|date:'Y-m-d'}}-->
                         <button type="submit" class="btn btn-sm btn-success">Guardar</button>
@@ -26,4 +25,3 @@
         </div>
 
 {% endblock%}
-

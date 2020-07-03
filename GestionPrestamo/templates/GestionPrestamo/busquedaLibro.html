@@ -20,7 +20,7 @@
                 </form>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        Resultados de la Busqueda
+                        Libros Recomendados para ti {{user.nombreUsuario}} {{user.apellidosUsuario}}
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -28,36 +28,25 @@
                         <thead>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><i class="fas fa-book fa-3x"></i></td>
-                                <td>Nombre del Libro 1</td>
-                                <td>01/01/2008</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-book fa-3x"></i></td>
-                                <td>Nombre del Libro 2</td>
-                                <td>01/02/2012</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-book fa-3x"></i></td>
-                                <td>Nombre del Libro 3 </td>
-                                <td>01/03/2015</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-book fa-3x"></i></td>
-                                <td>Nombre del Libro 4</td>
-                                <td>01/04/2010</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-book fa-3x"></i></td>
-                                <td>Nombre del Libro 5</td>
-                                <td>01/01/2000</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-book fa-3x"></i></td>
-                                <td>Nombre del Libro 6</td>
-                                <td>01/01/2004</td>
-                            </tr>
+                          {% if user.nombreUsuario == 'ROCIO DEL PILAR'%}
+                            {% for obj in libros%}
+                              <tr>
+                                  <td><i class="fas fa-book fa-3x"></i></td>
+                                  <td>{{obj.tituloLibro}}</td>
+                                  <td>{{obj.anioPublicacionLibro}}</td>
+                                  <td><a class="btn btn-sm btn-warning" href="{% url 'registrarReservacion' %}">Reservar</a> </td>
+                              </tr>
+                            {% endfor %}
+                          {% else %}
+                            {% for obj in objs%}
+                              <tr>
+                                  <td><i class="fas fa-book fa-3x"></i></td>
+                                  <td>{{obj.tituloLibro}}</td>
+                                  <td>{{obj.anioPublicacionLibro}}</td>
+                                  <td><a class="btn btn-sm btn-warning" href="{% url 'registrarReservacion' %}">Reservar</a> </td>
+                              </tr>
+                            {% endfor %}
+                          {% endif %}
                         </tbody>
                     </table>
                 </div>

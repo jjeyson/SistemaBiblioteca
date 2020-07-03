@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Gestion de Usuarios</small>
@@ -25,12 +25,16 @@
                     <tbody>
                         {% for usuario in usuarios %}
                         <tr>
-                            <td>{{usuario.nombreLector}}</td>
-                            <td>{{usuario.apellidosLector}}</td>
-                            <td> Lector </td>
-                            <td>{{usuario.DNILector}}</td>
-                            <td><a href="{% url 'modificarUsuario' usuario.idLector %}" class="btn btn-sm btn-primary">Modificar</a></td>
-                            <td><a href="{% url 'eliminarUsuario' usuario.idLector %}" class="btn btn-sm btn-danger">Eliminar</a></td>
+                            <td>{{usuario.nombreUsuario}}</td>
+                            <td>{{usuario.apellidosUsuario}}</td>
+                              {% if usuario.tipoAdministradorUsuario %}
+                                <td>Administrador</td>
+                              {% else %}
+                                <td> Lector </td>
+                              {% endif %}
+                            <td>{{usuario.DNIUsuario}}</td>
+                            <td><a href="{% url 'modificarUsuario' usuario.id %}" class="btn btn-sm btn-primary">Modificar</a></td>
+                            <td><a href="{% url 'eliminarUsuario' usuario.id %}" class="btn btn-sm btn-danger">Eliminar</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

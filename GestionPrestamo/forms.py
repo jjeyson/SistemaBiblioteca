@@ -1,8 +1,10 @@
 from django import forms
 from django.forms import DateTimeField
-from GestionPrestamo.models import Libro, Lector, Bibliotecario, EtiquetaLibro, AutorLibro, Idioma, Reservacion, LibroInstancia, TipoUsuario, GeneroLibro, Editorial, Pais
+from GestionPrestamo.models import Libro, Lector, Bibliotecario, EtiquetaLibro, AutorLibro, Idioma, Reservacion, LibroInstancia, TipoUsuario, GeneroLibro, Editorial, Pais, Usuario
 from django.utils.timezone import now
 from django.conf import settings
+#from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 
@@ -140,3 +142,69 @@ class Form_RegistroPais(forms.ModelForm):
         model = Pais
         fields = '__all__'
         exclude = ('fechaCreacionPais','estadoPais')
+
+class Form_RegistroUsuario(forms.ModelForm):
+    fechaCreacionUsuario = DateTimeField(widget=forms.HiddenInput(),input_formats=["%Y-%m-%d %H:%M:%S"])
+    #password = forms.CharField(widget=forms.HiddenInput())
+    fechaNacimientoUsuario = forms.DateField(label='Fecha de Nacimiento',widget=Form_DateInput(format='%Y-%m-%d'))
+    estadoUsuario = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+    password1 = forms.CharField(label='Clave',widget=forms.PasswordInput(
+        attrs = {
+            'class':'form-control',
+            'placeholder':'Ingrese su contraseña...',
+            'id': 'password1',
+            'required': 'required',
+        }))
+    password2 = forms.CharField(label='Clave de confirmación',widget=forms.PasswordInput(
+        attrs = {
+            'class':'form-control',
+            'placeholder':'Ingrese nuevamente su contraseña...',
+            'id': 'password2',
+            'required': 'required',
+        }))
+    class Meta:
+        model = Usuario
+        fields = ('email', 'username','nombreUsuario','apellidosUsuario', 'DNIUsuario','fechaNacimientoUsuario')
+        widgets = {
+            'fechaNacimientoUsuario': forms.DateInput(attrs={'class': 'date-input'}),
+            'email': forms.EmailInput(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingrese su nombre',
+                }
+            ),
+            'nombre': forms.TextInput(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingrese su nombre',
+                }),
+            'apellidos': forms.TextInput(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingrese sus apellidos',
+                }),
+            'direccion': forms.TextInput(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingrese su direccion',
+                })
+        #ordering = ['-fecha']
+            }
+        def clean_password2(self):
+            password1 = self.cleaned_data.get('password1')
+            password2 = self.cleaned_data.get('password2')
+            if password1 == password2:
+                raise forms.ValidationError('Contraseñas no coinciden')
+            return password2
+        def save(self,commit=True):
+            user = super().save(commit = false)
+            user.set_password(self.cleaned_data['password1'])
+            if commit:
+                user.save()
+            return user
+
+#class CustomUserForm(UserCreationForm):
+
+    #class Meta:
+        #model = User
+        #fields = ['first_name','last_name','email','username','password1','password2']

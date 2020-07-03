@@ -1,8 +1,8 @@
 from django.contrib import admin
-from GestionPrestamo.models import Bibliotecario, Libro, AutorLibro,Reservacion, EtiquetaLibro, Editorial, Lector, Idioma, GeneroLibro, Pais
-
+from GestionPrestamo.models import Bibliotecario, Libro, AutorLibro,Reservacion, EtiquetaLibro, Editorial, Lector, Idioma, GeneroLibro, Pais, Usuario
+Usuario
 # Register your models here.
-
+admin.site.register(Usuario)
 class BibliotecarioAdmin(admin.ModelAdmin):
     list_display=("nombreBibliotecario","usernameBibliotecario", "claveBibliotecario")
     search_fields=("nombreBibliotecario","usernameBibliotecario","fechaCreacionBibliotecario")

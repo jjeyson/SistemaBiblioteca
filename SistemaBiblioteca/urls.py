@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from GestionPrestamo.views import registrarUsuario
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('GestionPrestamo.urls')),
+    path('',include('django.contrib.auth.urls'),name='login'),
+    path('registro', registrarUsuario,name='registrarUsuario'),
 ]

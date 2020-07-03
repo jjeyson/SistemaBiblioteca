@@ -3,7 +3,7 @@ from GestionPrestamo import views
 from GestionPrestamo import models
 
 urlpatterns = [
-    path('',views.index,name='index'),
+    path('index',views.index,name='index'),
     path('busquedaLibro',views.busquedaLibro,name='busquedaLibro'),
     path('gestionLibro',views.gestionLibro,name='gestionLibro'),
     path('gestionUsuario',views.gestionUsuario,name='gestionUsuario'),
@@ -13,8 +13,8 @@ urlpatterns = [
     path('modificarLibro/<int:idLibro>',views.modificarLibro,name='modificarLibro'),
     path('eliminarLibro/<int:idLibro>',views.eliminarLibro,name='eliminarLibro'),
     path('registrarUsuario/',views.registrarUsuario,name='registrarUsuario'),
-    path('modificarUsuario/<int:idLector>',views.modificarUsuario,name='modificarUsuario'),
-    path('eliminarUsuario/<int:idLector>',views.eliminarUsuario,name='eliminarUsuario'),
+    path('modificarUsuario/<int:id>',views.modificarUsuario,name='modificarUsuario'),
+    path('eliminarUsuario/<int:id>',views.eliminarUsuario,name='eliminarUsuario'),
     path('registrarBibliotecario/',views.registrarBibliotecario,name='registrarBibliotecario'),
     path('modificarBibliotecario/<int:idBibliotecario>',views.modificarBibliotecario,name='modificarBibliotecario'),
     path('eliminarBibliotecario/<int:idBibliotecario>',views.eliminarBibliotecario,name='eliminarBibliotecario'),
