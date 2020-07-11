@@ -20,7 +20,7 @@ FORMATO_LIBRO=(
         ('a', 'E-book e Impreso'),
     )
 
-class Inicio(SuperUsuarioMixin, TemplateView):
+class Inicio(LoginRequiredMixin,TemplateView):
     template_name = 'GestionPrestamo/index.html'
 
 @login_required
