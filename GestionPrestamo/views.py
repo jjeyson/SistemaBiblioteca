@@ -9,22 +9,19 @@ from GestionPrestamo.forms import Form_RegistroLibro, Form_RegistroLector, Form_
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView, ListView, UpdateView, CreateView, View
+from django.urls import reverse_lazy
+from GestionPrestamo.mixins import SuperUsuarioMixin
 # Create your views here.
 FORMATO_LIBRO=(
         ('e', 'E-book'),
         ('i', 'Impreso'),
         ('a', 'E-book e Impreso'),
     )
-@login_required
-def index(request):
-    return render(request,"GestionPrestamo/index.html")
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return render(self.template_name)
-        else:
-            return redirect('login')
 
+class Inicio(SuperUsuarioMixin, TemplateView):
+    template_name = 'GestionPrestamo/index.html'
 
 @login_required
 def busquedaLibro(request):
@@ -38,156 +35,188 @@ def busquedaLibro(request):
     'objs':objs
     }
     return render(request, "GestionPrestamo/busquedaLibro.html",contexto)
-@login_required
-def gestionLibro(request):
-    libros = Libro.objects.all()
-    contexto = {
-        'libros' : libros
-    }
-    return render(request,"GestionPrestamo/gestionLibro.html",contexto)
-@login_required
-def gestionUsuario(request):
-    usuarios = Usuario.objects.all().order_by('-fechaCreacionUsuario')
-    contexto = {
-        'usuarios' : usuarios
-    }
-    return render(request,"GestionPrestamo/gestionUsuario.html",contexto)
-@login_required
-def administracion(request):
-    return render(request, "GestionPrestamo/administracion.html")
-@login_required
-def gestionBibliotecario(request):
-    objs = Bibliotecario.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionBibliotecario.html", contexto)
-@login_required
-def gestionEtiquetaLibro(request):
-    objs = EtiquetaLibro.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionEtiquetaLibro.html", contexto)
-@login_required
-def gestionEditorial(request):
-    objs = Editorial.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionEditorial.html", contexto)
-@login_required
-def gestionReservacion(request):
-    objs = Reservacion.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionReservacion.html", contexto)
-@login_required
-def gestionIdioma(request):
-    objs = Idioma.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionIdioma.html", contexto)
-@login_required
-def gestionLibroInstancia(request):
-    objs = LibroInstancia.objects.all()
-    contexto = {
-        'objs' : objs,
-    }
-    return render(request, "GestionPrestamo/gestionLibroInstancia.html", contexto)
-@login_required
-def gestionTipoUsuario(request):
-    objs = TipoUsuario.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionTipoUsuario.html", contexto)
-@login_required
-def gestionGeneroLibro(request):
-    objs = GeneroLibro.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionGeneroLibro.html", contexto)
-@login_required
-def gestionAutorLibro(request):
-    objs = AutorLibro.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionAutorLibro.html", contexto)
 
-@login_required
-def gestionPais(request):
-    objs = Pais.objects.all()
-    contexto = {
-        'objs' : objs
-    }
-    return render(request, "GestionPrestamo/gestionPais.html", contexto)
+class GestionLibro(SuperUsuarioMixin,ListView):
+    model: Libro
+    template_name = 'GestionPrestamo/gestionLibro.html'
+    queryset = Libro.objects.filter(estadoLibro = True)
+    paginate_by = 10
+    def get_queryset(self):
+        queryset = super(GestionLibro, self).get_queryset()
+        return queryset.filter(estadoLibro=True)
+
+class GestionUsuario(SuperUsuarioMixin, ListView):
+    model: Usuario
+    template_name = 'GestionPrestamo/gestionUsuario.html'
+    queryset = Usuario.objects.filter(estadoUsuario = True)
+
+class Administracion(SuperUsuarioMixin,TemplateView):
+    template_name='GestionPrestamo/administracion.html'
+
+class GestionBibliotecario(SuperUsuarioMixin,ListView):
+    model: Bibliotecario
+    template_name = 'GestionPrestamo/gestionBibliotecario.html'
+    queryset = Bibliotecario.objects.filter(estadoBibliotecario = True)
+
+class GestionEtiquetaLibro(SuperUsuarioMixin,ListView):
+    model: EtiquetaLibro
+    template_name = 'GestionPrestamo/gestionEtiquetaLibro.html'
+    queryset = EtiquetaLibro.objects.filter(estadoEtiquetaLibro = True)
+
+class GestionEditorial(SuperUsuarioMixin,ListView):
+    model: Editorial
+    template_name = 'GestionPrestamo/gestionEditorial.html'
+    queryset = Editorial.objects.filter(estadoEditorial = True)
+
+class GestionReservacion(SuperUsuarioMixin, ListView):
+    model: Reservacion
+    template_name = 'GestionPrestamo/gestionReservacion.html'
+    queryset = Reservacion.objects.filter(estadoReservacion = True)
+
+class GestionIdioma(SuperUsuarioMixin, ListView):
+    model: Idioma
+    template_name = 'GestionPrestamo/gestionIdioma.html'
+    queryset = Idioma.objects.filter(estadoIdioma = True)
+
+class GestionLibroInstancia(SuperUsuarioMixin, ListView):
+    model: LibroInstancia
+    template_name = 'GestionPrestamo/gestionLibroInstancia.html'
+    queryset = LibroInstancia.objects.filter(estadoLibroInstancia = True)
+
+class GestionTipoUsuario(SuperUsuarioMixin, ListView):
+    model: TipoUsuario
+    template_name = 'GestionPrestamo/gestionTipoUsuario.html'
+    queryset = TipoUsuario.objects.filter(estadoTipoUsuario = True)
+
+class GestionGeneroLibro(SuperUsuarioMixin, ListView):
+    model: GeneroLibro
+    template_name = 'GestionPrestamo/gestionGeneroLibro.html'
+    queryset = GeneroLibro.objects.filter(estadoGeneroLibro = True)
+
+class GestionAutorLibro(SuperUsuarioMixin, ListView):
+    model: AutorLibro
+    template_name = 'GestionPrestamo/gestionAutorLibro.html'
+    queryset = AutorLibro.objects.filter(estadoAutorLibro = True)
+
+class GestionPais(SuperUsuarioMixin, ListView):
+    model: Pais
+    template_name = 'GestionPrestamo/gestionPais.html'
+    queryset = Pais.objects.filter(estadoPais = True)
+
+class Gracias(TemplateView):
+    template_name='gracias.html'
 
 
 
 @login_required
-def gracias(request):
-    return render(request, "gracias.html")
+def buscar_libro(request):
+    if(request.GET.get("txt_buscar")):
+        #mensaje = "Libro Buscado: %r"%request.GET["txt_nombre"]
+        #libro = request.GET["txt_buscar"]
+        query = request.GET.get("txt_buscar")
+        if len(query)>50:
+            mensaje = "Titulo demasiado Largo, porfavor vuelva a intentarlo"
+        else:
+            #resultado = Libro.objects.filter(tituloLibro__resumenLibro__icontains = libro
+            #).distinct()
+            querys = (Q(tituloLibro__icontains=query) | Q(resumenLibro__icontains=query))
+            #querys |= Q(editorialLibro__icontains=query)
+
+            libros = Libro.objects.filter(querys)
+            return render(request,"GestionPrestamo/form_Busqueda_Libro.html", {'libros':libros,"query":query})
+    else:
+        mensaje = "No has ingresado ningun libro"
+    return HttpResponse(mensaje)
+
+class RegistrarLibro(SuperUsuarioMixin, LoginRequiredMixin, CreateView):
+    myDate = datetime.now()
+    formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
+    cantidadLibros=(0,1,2,3,4,5,6,7,8,9,10)
+    model = Libro
+    form_class = Form_RegistroLibro
+    template_name = 'GestionPrestamo/registroLibro.html'
+    sucess_url = reverse_lazy('gestionLibro')
+    def get(self,request,*args,**kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+
+        #contexto = super(Libro, self).get_context_data(**kwargs)
+        cantidad = self.cantidadLibros
+        form.fields['fechaCreacionLibro'].initial = self.formatedDate
+        return self.render_to_response(
+                    self.get_context_data(form=form,cantidad=cantidad))
+        def form_valid(self, form):
+            libro = form.save(commit=False)
+            libro.save()
+            return redirect('gestionLibro')
+        def get_success_url(self):
+            return reverse('gestionLibro')
+
+    def form_valid(self, form):
+        libro = form.save(commit=False)
+        libro.save()
+        return redirect('gestionLibro')
+
 @login_required
 def registrarLibro(request):
     cantidadLibros=(0,1,2,3,4,5,6,7,8,9,10)
     if request.method == 'GET':
-        formRegistrarLibro = Form_RegistroLibro()
+        form = Form_RegistroLibro()
         myDate = datetime.now()
         formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
-        formRegistrarLibro.fields['fechaCreacionLibro'].initial = formatedDate
+        form.fields['fechaCreacionLibro'].initial = formatedDate
 
         contexto = {
-            'formRegistrarLibro' : formRegistrarLibro,
+            'form' : form,
             'cantidadLibros' : cantidadLibros,
         }
     else:
-        formRegistrarLibro = Form_RegistroLibro(request.POST)
-        #formRegistrarLibroInstancia = Form_RegistroLibroInstancia()
+        form = Form_RegistroLibro(request.POST)
+        #formInstancia = Form_RegistroLibroInstancia()
         contexto = {
-            'formRegistrarLibro' : formRegistrarLibro,
+            'form' : form,
         }
-        if formRegistrarLibro.is_valid():
-            formRegistrarLibro.save()
+        if form.is_valid():
+            form.save()
             #libro = Libro.objects.latest('fechaCreacionLibro')
             #for i in [0,1,2,3,4,5,6,7,8,9,10]:
-            #    formRegistrarLibroInstancia.fields['estadoPrestamoLibroInstancia'].initial = 'd'
-            #    formRegistrarLibroInstancia.fields['libro_LibroInstancia'].initial = libro
+            #    formInstancia.fields['estadoPrestamoLibroInstancia'].initial = 'd'
+            #    formInstancia.fields['libro_LibroInstancia'].initial = libro
 
-            #formRegistrarLibroInstancia.save()
+            #formInstancia.save()
             return redirect('gestionLibro')
 
     return render(request, "GestionPrestamo/registroLibro.html", contexto)
-@login_required
-def modificarLibro(request, idLibro):
-    libro = Libro.objects.get(idLibro= idLibro)
-    if request.method == 'GET':
-        formRegistrarLibro = Form_RegistroLibro(instance=libro)
-        myDate = datetime.now()
-        formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
-        formRegistrarLibro.fields['fechaCreacionLibro'].initial = formatedDate
-        contexto = {
-            'formRegistrarLibro' : formRegistrarLibro
-        }
-    else:
-        formRegistrarLibro = Form_RegistroLibro(request.POST, instance= libro)
-        contexto = {
-            'formRegistrarLibro' : formRegistrarLibro
-        }
-        if formRegistrarLibro.is_valid():
-            formRegistrarLibro.save()
-            return redirect('gestionLibro')
-    return render(request, "GestionPrestamo/registroLibro.html", contexto)
+
+
+class ModificarLibro(LoginRequiredMixin,UpdateView):
+    myDate = datetime.now()
+    formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
+    cantidadLibros=(0,1,2,3,4,5,6,7,8,9,10)
+    model = Libro
+    form_class = Form_RegistroLibro
+    template_name = 'GestionPrestamo/registroLibro.html'
+    sucess_url = reverse_lazy('gestionLibro')
+    def get(self,request,*args,**kwargs):
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        cantidad = self.cantidadLibros
+        form.fields['fechaCreacionLibro'].initial = self.formatedDate
+        return self.render_to_response(
+                    self.get_context_data(form=form,cantidad=cantidad))
+    def form_valid(self, form):
+        libro = form.save(commit=False)
+        libro.save()
+        return redirect('gestionLibro')
 @login_required
 def eliminarLibro(request, idLibro):
     libro = Libro.objects.get(idLibro= idLibro)
-    libro.delete()
+    libro.estadoLibro = False
+    libro.save()
     return redirect('gestionLibro')
-
+@login_required
 def registrarUsuario(request):
     if request.method == 'GET':
         form = Form_RegistroUsuario()
@@ -245,8 +274,9 @@ def modificarUsuario(request, id):
     return render(request, "GestionPrestamo/registroUsuario.html", contexto)
 @login_required
 def eliminarUsuario(request, id):
-    usuario = Usuario.objects.get(id= id)
-    usuario.delete()
+    obj = Usuario.objects.get(id= id)
+    obj.estadoUsuario = False
+    obj.save()
     return redirect('gestionUsuario')
 
 
@@ -295,28 +325,10 @@ def modificarBibliotecario(request, idBibliotecario):
 @login_required
 def eliminarBibliotecario(request, idBibliotecario):
     obj = Bibliotecario.objects.get(idBibliotecario= idBibliotecario)
-    obj.delete()
+    obj.estadoBibliotecario = False
+    obj.save()
     return redirect('gestionBibliotecario')
 
-@login_required
-def buscar_libro(request):
-    if(request.GET.get("txt_buscar")):
-        #mensaje = "Libro Buscado: %r"%request.GET["txt_nombre"]
-        #libro = request.GET["txt_buscar"]
-        query = request.GET.get("txt_buscar")
-        if len(query)>50:
-            mensaje = "Titulo demasiado Largo, porfavor vuelva a intentarlo"
-        else:
-            #resultado = Libro.objects.filter(tituloLibro__resumenLibro__icontains = libro
-            #).distinct()
-            querys = (Q(tituloLibro__icontains=query) | Q(resumenLibro__icontains=query))
-            #querys |= Q(editorialLibro__icontains=query)
-
-            libros = Libro.objects.filter(querys)
-            return render(request,"GestionPrestamo/form_Busqueda_Libro.html", {'libros':libros,"query":query})
-    else:
-        mensaje = "No has ingresado ningun libro"
-    return HttpResponse(mensaje)
 
 @login_required
 def registrarEtiquetaLibro(request):
@@ -361,7 +373,8 @@ def modificarEtiquetaLibro(request, idEtiquetaLibro):
 @login_required
 def eliminarEtiquetaLibro(request, idEtiquetaLibro):
     obj = EtiquetaLibro.objects.get(idEtiquetaLibro= idEtiquetaLibro)
-    obj.delete()
+    obj.estadoEtiquetaLibro = False
+    obj.save()
     return redirect('gestionEtiquetaLibro')
 
 
@@ -409,7 +422,8 @@ def modificarEditorial(request, idEditorial):
 @login_required
 def eliminarEditorial(request, idEditorial):
     obj = Editorial.objects.get(idEditorial= idEditorial)
-    obj.delete()
+    obj.estadoEditorial = False
+    obj.save()
     return redirect('gestionEditorial')
 
 
@@ -451,7 +465,8 @@ def modificarIdioma(request, idIdioma):
 @login_required
 def eliminarIdioma(request, idIdioma):
     obj = Idioma.objects.get(idIdioma= idIdioma)
-    obj.delete()
+    obj.estadoIdioma = False
+    obj.save()
     return redirect('gestionIdioma')
 
 
@@ -496,7 +511,8 @@ def modificarReservacion(request, idReservacion):
 @login_required
 def eliminarReservacion(request, idReservacion):
     obj = Reservacion.objects.get(idReservacion= idReservacion)
-    obj.delete()
+    obj.estadoReservacion = False
+    obj.save()
     return redirect('gestionReservacion')
 
 
@@ -548,7 +564,8 @@ def modificarLibroInstancia(request, idLibroInstancia):
 @login_required
 def eliminarLibroInstancia(request, idLibroInstancia):
     obj = LibroInstancia.objects.get(idLibroInstancia= idLibroInstancia)
-    obj.delete()
+    obj.estadoLibroInstancia = False
+    obj.save()
     return redirect('gestionLibroInstancia')
 
 
@@ -599,7 +616,8 @@ def modificarTipoUsuario(request, idTipoUsuario):
 @login_required
 def eliminarTipoUsuario(request, idTipoUsuario):
     obj = TipoUsuario.objects.get(idTipoUsuario= idTipoUsuario)
-    obj.delete()
+    obj.estadoTipoUsuario = False
+    obj.save()
     return redirect('gestionTipoUsuario')
 
 
@@ -646,8 +664,9 @@ def modificarGeneroLibro(request, idGeneroLibro):
     return render(request, "GestionPrestamo/registroGeneroLibro.html", contexto)
 @login_required
 def eliminarGeneroLibro(request, idGeneroLibro):
-    obj = TipoUsuario.objects.get(idGeneroLibro= idGeneroLibro)
-    obj.delete()
+    obj = GeneroLibro.objects.get(idGeneroLibro= idGeneroLibro)
+    obj.estadoGeneroLibro = False
+    obj.save()
     return redirect('gestionGeneroLibro')
 @login_required
 def registrarAutorLibro(request):
@@ -693,8 +712,10 @@ def modificarAutorLibro(request, idAutorLibro):
 @login_required
 def eliminarAutorLibro(request, idAutorLibro):
     obj = AutorLibro.objects.get(idAutorLibro= idAutorLibro)
-    obj.delete()
+    obj.estadoAutorLibro = False
+    obj.save()
     return redirect('gestionAutorLibro')
+
 @login_required
 def registrarPais(request):
     if request.method == 'GET':
@@ -733,5 +754,6 @@ def modificarPais(request, idPais):
 @login_required
 def eliminarPais(request, idPais):
     obj = Pais.objects.get(idPais= idPais)
-    obj.delete()
+    obj.estadoPais = False
+    obj.save()
     return redirect('gestionPais')

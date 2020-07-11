@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Gestion de Editorial</small>
@@ -22,7 +22,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for obj in objs %}
+                      {% if object_list %}
+                        {% for obj in object_list %}
                         <tr>
                             <td>{{obj.tituloEditorial}}</td>
                             <td>{{obj.fechaCreacionEditorial}}</td>
@@ -30,6 +31,9 @@
                             <td><a href="{% url 'eliminarEditorial' obj.idEditorial %}" class="btn btn-sm btn-danger">Eliminar</a></td>
                         </tr>
                         {% endfor %}
+                      {% else %}
+                        <tr><td>No hay Editoriales registradas</td></tr>
+                      {% endif %}
                     </tbody>
                 </table>
             </div>

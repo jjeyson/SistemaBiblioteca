@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Gestion de Libros en Instancias</small>
@@ -21,7 +21,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for obj in objs %}
+                      {% if object_list %}
+                        {% for obj in object_list %}
                         <tr>
                             <td>{{obj.libro_LibroInstancia}}</td>
                             {% if obj.estadoPrestamoLibroInstancia == 'm' %}
@@ -40,6 +41,9 @@
                             <td><a href="{% url 'eliminarLibroInstancia' obj.idLibroInstancia %}" class="btn btn-sm btn-danger">Eliminar</a></td>
                         </tr>
                         {% endfor %}
+                      {% else %}
+                        <tr><td>No hay libros disponibles para poder prestar</td></tr>
+                      {% endif %}
                     </tbody>
                 </table>
             </div>

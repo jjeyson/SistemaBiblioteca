@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Gestion de Idiomas</small>
@@ -21,7 +21,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for obj in objs %}
+                      {% if object_name %}
+                        {% for obj in object_name %}
                         <tr>
                             <td>{{obj.tituloIdioma}}</td>
                             <td>{{obj.estadoIdioma}}</td>
@@ -29,6 +30,11 @@
                             <td><a href="{% url 'eliminarIdioma' obj.idIdioma %}" class="btn btn-sm btn-danger">Eliminar</a></td>
                         </tr>
                         {% endfor %}
+                      {% else %}
+                        <tr>
+                          <td>No hay Reservaciones</td>
+                        </tr>
+                      {% endif %}
                     </tbody>
                 </table>
             </div>

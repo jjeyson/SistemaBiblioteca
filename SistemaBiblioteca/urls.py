@@ -22,4 +22,5 @@ urlpatterns = [
     path('',include('GestionPrestamo.urls')),
     path('',include('django.contrib.auth.urls'),name='login'),
     path('registro', registrarUsuario,name='registrarUsuario'),
+    path('social', include('social_django.urls', namespace='social'))
 ]

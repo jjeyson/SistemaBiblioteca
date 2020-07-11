@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Gestion de Etiquetas</small>
@@ -12,6 +12,7 @@
                 </div>
             <a href="{% url 'registrarEtiquetaLibro' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
             <div class="table-responsive">
+              {% if object_list %}
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -20,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for obj in objs %}
+                        {% for obj in object_list %}
                         <tr>
                             <td>{{obj.tituloEtiquetaLibro}}</td>
                             <td><a href="{% url 'modificarEtiquetaLibro' obj.idEtiquetaLibro %}" class="btn btn-sm btn-primary">Modificar</a></td>
@@ -29,6 +30,9 @@
                         {% endfor %}
                     </tbody>
                 </table>
+              {% else %}
+                <tr><td>No hay etiquetas registradas</td></tr>
+              {% endif %}
             </div>
         </div>
 {% endblock%}

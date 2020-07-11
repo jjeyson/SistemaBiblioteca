@@ -210,16 +210,16 @@ class AutorLibro(models.Model):
 class Libro(models.Model):
     idLibro  = models.AutoField(primary_key=True, help_text="ID único para este libro")
     codigoLibro = models.CharField(max_length=20,verbose_name='Codigo de Biblioteca' , blank=True)
-    tituloLibro = models.CharField(max_length=200,verbose_name='Titulo', unique=True, help_text="Ingrese el nombre del género (p. ej. Ciencia Ficción, Poesía Francesa etc.)")
+    tituloLibro = models.CharField(max_length=200,verbose_name='Titulo', unique=True, help_text="Ingrese el nombre del Libro")
     etiquetaLibro_Libro = models.ManyToManyField(EtiquetaLibro, verbose_name="Tags", help_text="Seleccione los tags para este libro")
-    generoLibro = models.ManyToManyField(GeneroLibro, verbose_name="Género", help_text="Seleccione un genero para este libro")
+    genero_Libro = models.ManyToManyField(GeneroLibro, verbose_name="Género(s)", help_text="Seleccione un genero para este libro")
     FORMATO_LIBRO=(
         ('e', 'E-book'),
         ('i', 'Impreso'),
         ('a', 'E-book e Impreso'),
     )
     formatoLibro = models.CharField(verbose_name='Formato de Disponibilidad', max_length=1, choices=FORMATO_LIBRO, blank=True, default='e', help_text='Formato de disponibilidad del libro')
-    paisLibro = models.ForeignKey(Pais, on_delete=models.SET_NULL, null=True)
+    pais_Libro = models.ForeignKey(Pais, on_delete=models.SET_NULL, null=True)
     autorLibro_Libro = models.ManyToManyField(AutorLibro, verbose_name='Autor', help_text="Seleccione un autor para este libro")
     editorial_Libro = models.ForeignKey(Editorial, on_delete=models.SET_NULL, null=True)
     bibliotecario_Libro = models.ForeignKey(Bibliotecario, on_delete=models.SET_NULL, null=True)
@@ -237,6 +237,8 @@ class Libro(models.Model):
         return self.tituloLibro
 
     """def get_absolute_url(self):
+        return reverse('Detalle_Libro', kwargs={'lawyer_slug': self.lawyer_slug})
+    def get_absolute_url(self):
 
         #Devuelve el URL a una instancia particular de Book
 

@@ -1,8 +1,8 @@
 {% extends "GestionPrestamo/masterPage.html" %}
 
 {% load static %}
-
 {% block content %}
+
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div align="center">
@@ -15,14 +15,35 @@
                         <h3 class="panel-title">Libro de Instancia</h3>
                     </div>
                     <div class="panel-body">
-                        <a href="{% url 'gestionLibroInstancia' %}" class="btn btn-lg btn-danger">Gestionar</a>
+                        <a href="{% url 'gestionLibroInstancia' %}" class="btn btn-sm btn-danger">Gestionar</a>
                     </div>
                 </div>
-            <a href="{% url 'registrarLibro' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
+            <a href="{% url 'registrarLibro' %}" type="button" class="btn btn-lg btn-warning">Nuevo</a>
+            <nav>
+              {% if is_paginated %}
+              <ul class="pagination">
+                  {% if page_obj.has_previous %}
+                      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                  {% endif %}
+
+                  {% for i in paginator.page_range %}
+                      <li {% if page_obj.number == i %} class="active" {% endif %}>
+                          <a href="?page={{i}}">{{ i }}</a>
+                      </li>
+                  {% endfor %}
+
+                  {% if page_obj.has_next %}
+                      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                  {% endif %}
+              </ul>
+              {% endif %}
+            </nav>
             <div class="table-responsive">
+
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th>Código</th>
                             <th>Titulo</th>
                             <th>Autor</th>
                             <th>Fecha de Publicación</th>
@@ -31,8 +52,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for libro in libros %}
+                      {% if object_list %}
+                        {% for libro in object_list %}
                         <tr>
+                            <td>{{libro.codigoLibro}}</td>
                             <td>{{libro.tituloLibro}}</td>
                               {% for autor in libro.autorLibro_Libro.all %}
                                 <td>{{autor.nombreAutorLibro}} &nbsp; {{autor.apellidosAutorLibro}}</td>
@@ -51,8 +74,13 @@
                             <td><a href="{% url 'eliminarLibro' libro.idLibro %}" class="btn btn-sm btn-danger">Eliminar</a></td>
                         </tr>
                         {% endfor %}
+                      {% else %}
+                        <tr><td>No hay libros registrados</td></tr>
+                      {% endif %}
                     </tbody>
                 </table>
             </div>
+
+
         </div>
 {% endblock%}

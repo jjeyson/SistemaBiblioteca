@@ -4,7 +4,7 @@
 
 {% block content %}
         <div id="page-wrapper">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div align="center">
                     <h1 class="page-header">
                         <small>Gestion de Géneros de Libros</small>
@@ -20,13 +20,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for obj in objs %}
+                      {% if object_list %}
+                        {% for obj in object_list %}
                         <tr>
                             <td>{{obj.tituloGeneroLibro}}</td>
                             <td><a href="{% url 'modificarGeneroLibro' obj.idGeneroLibro %}" class="btn btn-sm btn-primary">Modificar</a></td>
                             <td><a href="{% url 'eliminarGeneroLibro' obj.idGeneroLibro %}" class="btn btn-sm btn-danger">Eliminar</a></td>
                         </tr>
                         {% endfor %}
+                      {% else %}
+                        <tr><td>No Hay Géneros registrados</td></tr>
+                      {% endif %}
                     </tbody>
                 </table>
             </div>

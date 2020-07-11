@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
     /*
         Fullscreen background
     */
-    $.backstretch("{% static 'registrar/assets/img/backgrounds/background.jpg' %}");
+    $.backstretch("{% static 'registrar/assets/img/backgrounds/1.jpg' %}");
 
     /*
         Form validation

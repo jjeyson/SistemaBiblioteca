@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>Libro</th>
-                            <th>Usuario Lector</th>
+                            <th>Usuario</th>
                             <th>Adquisición</th>
                             <th>Bibliotecario</th>
                             <th>Fecha de Retorno</th>
@@ -24,25 +24,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for obj in objs %}
-                        <tr>
-                            <td>{{obj.libro_Reservacion}}</td>
-                            <td>{{obj.usuario_reservacion}}</td>
-                              {% if obj.tipoAdquisicionReservacion == 'i' %}
-                                <td>Interno</td>
-                              {% endif  %}
-                              {% if obj.tipoAdquisicionReservacion == 'e' %}
-                                <td>Externo</td>
-                              {% endif  %}
-                              {% if obj.tipoAdquisicionReservacion == 'a' %}
-                                <td>Interbibliotecario</td>
-                              {% endif  %}
-                            <td>{{obj.bibliotecario_Reservacion}}</td>
-                            <td>{{obj.fechaRetornoReservacion}}</td>
-                            <td><a href="{% url 'modificarReservacion' obj.idReservacion %}" class="btn btn-sm btn-primary">Modificar</a></td>
-                            <td><a href="{% url 'eliminarReservacion' obj.idReservacion %}" class="btn btn-sm btn-danger">Eliminar</a></td>
-                        </tr>
-                        {% endfor %}
+                      {% if object_list  %}
+                          {% for obj in object_list %}
+                          <tr>
+                              <td>{{obj.libro_Reservacion}}</td>
+                              <td>{{obj.usuario_reservacion}}</td>
+                                {% if obj.tipoAdquisicionReservacion == 'i' %}
+                                  <td>Interno</td>
+                                {% endif  %}
+                                {% if obj.tipoAdquisicionReservacion == 'e' %}
+                                  <td>Externo</td>
+                                {% endif  %}
+                                {% if obj.tipoAdquisicionReservacion == 'a' %}
+                                  <td>Interbibliotecario</td>
+                                {% endif  %}
+                              <td>{{obj.bibliotecario_Reservacion}}</td>
+                              <td>{{obj.fechaRetornoReservacion}}</td>
+                              <td><a href="{% url 'modificarReservacion' obj.idReservacion %}" class="btn btn-sm btn-primary">Modificar</a></td>
+                              <td><a href="{% url 'eliminarReservacion' obj.idReservacion %}" class="btn btn-sm btn-danger">Eliminar</a></td>
+                          </tr>
+                          {% endfor %}
+                        {% else %}
+                          <tr>
+                            <td>No hay Reservaciones</td>
+                          </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
