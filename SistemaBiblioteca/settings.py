@@ -29,8 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +38,27 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'GestionPrestamo',
     'social_django',
-]
+    'rest_framework',
+    'corsheaders',
+    # Esta esa nueva para django-allauth
+    #'django.contrib.sites',
+)
+"""THIRD_PARTY_APPS = (
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+)
+LOCAL_APPS = (
+    'posts',
+    'users',
+)"""
+
+INSTALLED_APPS = DJANGO_APPS #+ THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware' ,
+    'django.middleware.common.CommonMiddleware' ,
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,7 +66,21 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.gitlab.GitLabOAuth2',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    #'allauth.account.auth_backends.AuthenticationBackend',
+)
+#SITE_ID = 1
 
 ROOT_URLCONF = 'SistemaBiblioteca.urls'
 
@@ -87,19 +118,22 @@ DATABASES = {
         'PORT':'5432',
     }
 }
+CORS_Origin_WHITELIST = (
 
-AUTHENTIFICATION_BACKENDS = [
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.google.GoogleOAuth',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.yahoo.YahooOpenId',
-    'socila_core.backends.facebook.FacebookOAuth2'
-    'django.contrib.auth.backends.ModelBackend',
-]
+    '127.0.0.1:8001/',
+    'hostname.example.com',
+    'localhost:8000',
+    '127.0.0.1:9000'
+)
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_FACEBOOK_KEY = '590280405224322'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'd96e3e9c1abdcf83664f53cc894660d9'
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.11'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 LOGIN_REDIRECT_URL = '/index'
 LOGOUT_REDIRECT_URL = '/login'
 # Password validation
@@ -150,3 +184,30 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "george3000.jj@gmail.com"
 EMAIL_HOST_PASSWORD = "Never;_@2012"
+
+"""ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.12',
+    }
+}"""

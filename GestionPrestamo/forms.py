@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import DateTimeField
-from GestionPrestamo.models import Libro, Lector, Bibliotecario, EtiquetaLibro, AutorLibro, Idioma, Reservacion, LibroInstancia, TipoUsuario, GeneroLibro, Editorial, Pais, Usuario
+from GestionPrestamo.models import Libro, Lector, Bibliotecario, EtiquetaLibro, AutorLibro, Idioma, Reservacion, LibroInstancia, TipoUsuario, GeneroLibro, Editorial, Pais, Usuario, Rating
 from django.utils.timezone import now
 from django.conf import settings
 #from django.contrib.auth.forms import UserCreationForm
@@ -289,6 +289,7 @@ class Form_RegistroReservacion(forms.ModelForm):
     fechaEmisionReservacion =  forms.DateField(label='Fecha de emision',widget=Form_DateInput(format='%Y-%m-%d'))
     fechaRetornoReservacion = forms.DateField(label='Fecha de retorno',widget=Form_DateInput(format='%Y-%m-%d'))
     estadoReservacion = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+    libro_Reservacion = forms.ModelChoiceField(queryset=LibroInstancia.objects.filter(estadoLibroInstancia = True))
     class Meta:
         model = Reservacion
         fields = '__all__'
@@ -349,6 +350,15 @@ class Form_RegistroPais(forms.ModelForm):
             'tituloPais': forms.TextInput(attrs={'class': 'form-control',
                                                 'placeholder':'Ingrese el nombre del país'}),
                                 }
+
+class Form_RegistroRating(forms.ModelForm):
+    estadoRating = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+    fechaCreacionRating = DateTimeField(widget=forms.HiddenInput(),input_formats=["%Y-%m-%d %H:%M:%S"])
+    estrellasRating = forms.IntegerField(label='Calificacion', initial=3)
+    class Meta:
+        model = Rating
+        fields = '__all__'
+        exclude = ('fechaCreacionRating','estadoRating')
 
 class Form_RegistroUsuario(forms.ModelForm):
     fechaCreacionUsuario = DateTimeField(widget=forms.HiddenInput(),input_formats=["%Y-%m-%d %H:%M:%S"])

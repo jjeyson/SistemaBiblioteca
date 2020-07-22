@@ -28,25 +28,17 @@
                         <thead>
                         </thead>
                         <tbody>
-                          {% if user.nombreUsuario == 'ROCIO DEL PILAR'%}
                             {% for obj in libros%}
                               <tr>
                                   <td><i class="fas fa-book fa-3x"></i></td>
                                   <td>{{obj.tituloLibro}}</td>
                                   <td>{{obj.anioPublicacionLibro}}</td>
                                   <td><a class="btn btn-sm btn-warning" href="{% url 'registrarReservacion' %}">Reservar</a> </td>
+                                  <td><div class="panel-body">
+                                      <a href="{% url 'registrarRating' obj.idLibro %}" class="btn btn-lg btn-default">Calificar</a>
+                                  </div></td>
                               </tr>
                             {% endfor %}
-                          {% else %}
-                            {% for obj in objs%}
-                              <tr>
-                                  <td><i class="fas fa-book fa-3x"></i></td>
-                                  <td>{{obj.tituloLibro}}</td>
-                                  <td>{{obj.anioPublicacionLibro}}</td>
-                                  <td><a class="btn btn-sm btn-warning" href="{% url 'registrarReservacion' %}">Reservar</a> </td>
-                              </tr>
-                            {% endfor %}
-                          {% endif %}
                         </tbody>
                     </table>
                 </div>

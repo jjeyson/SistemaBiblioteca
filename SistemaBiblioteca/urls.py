@@ -15,12 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from GestionPrestamo.views import registrarUsuario
+from GestionPrestamo.views import registrarUsuario, LibroViewSet,RatingViewSet,UsuarioViewSet, LibrosReservadosViewSet, hello_user
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
+router = DefaultRouter()
+router.register(r'libros',LibroViewSet)
+router.register(r'ratings',RatingViewSet)
+router.register(r'usuarios',UsuarioViewSet)
+router.register(r'librosReservados',LibrosReservadosViewSet)
+
+urlpatterns = router.urls
+
+urlpatterns += [
     path('admin/', admin.site.urls),
     path('',include('GestionPrestamo.urls')),
     path('',include('django.contrib.auth.urls'),name='login'),
     path('registro', registrarUsuario,name='registrarUsuario'),
-    path('social', include('social_django.urls', namespace='social'))
+    path('hello', hello_user,name='hello'),
+    path('social-auth/', include('social_django.urls', namespace='social'))
 ]

@@ -10,7 +10,7 @@
                         <small>Gestion de Reservaciones</small>
                     </h1>
                 </div>
-            <!--<a href="{% url 'registrarReservacion' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>-->
+            <a href="{% url 'registrarReservacion' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -40,7 +40,7 @@
                                 {% endif  %}
                               <td>{{obj.bibliotecario_Reservacion}}</td>
                               <td>{{obj.fechaRetornoReservacion}}</td>
-                              <!--<td><a href="{% url 'modificarReservacion' obj.idReservacion %}" class="btn btn-sm btn-primary">Modificar</a></td>-->
+                              <td><a href="{% url 'modificarReservacion' obj.idReservacion %}" class="btn btn-sm btn-primary">Modificar</a></td>
                               <td><a href="{% url 'eliminarReservacion' obj.idReservacion %}" class="btn btn-sm btn-danger">Eliminar</a></td>
                           </tr>
                           {% endfor %}

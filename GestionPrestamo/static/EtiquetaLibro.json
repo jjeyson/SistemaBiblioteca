@@ -1,0 +1,572 @@
+[
+  {
+    "idEtiquetaLibro": 1,
+    "tituloEtiquetaLibro": "Estrategia empresarial",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T10:36:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 2,
+    "tituloEtiquetaLibro": "Inteligencia de Negocios",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T10:36:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 3,
+    "tituloEtiquetaLibro": "Business Intelligence",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T10:36:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 4,
+    "tituloEtiquetaLibro": "Gartner",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T10:36:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 5,
+    "tituloEtiquetaLibro": "Economia",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:21:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 6,
+    "tituloEtiquetaLibro": "Industrial",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:21:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 8,
+    "tituloEtiquetaLibro": "2013",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:21:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 9,
+    "tituloEtiquetaLibro": "Hannover-Messe",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:22:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 10,
+    "tituloEtiquetaLibro": "Programación",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:32:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 11,
+    "tituloEtiquetaLibro": "Informática",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:33:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 12,
+    "tituloEtiquetaLibro": "Desarrollo de Software",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:33:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 13,
+    "tituloEtiquetaLibro": "Universitario",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:33:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 14,
+    "tituloEtiquetaLibro": "Computación en la nube",
+    "fechaCreacionEtiquetaLibro": "2020-06-23T12:26:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 15,
+    "tituloEtiquetaLibro": "Cloud Computing",
+    "fechaCreacionEtiquetaLibro": "2020-06-23T12:26:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 16,
+    "tituloEtiquetaLibro": "empresas",
+    "fechaCreacionEtiquetaLibro": "2020-06-23T12:27:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 18,
+    "tituloEtiquetaLibro": "Big Data",
+    "fechaCreacionEtiquetaLibro": "2020-06-25T12:27:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 19,
+    "tituloEtiquetaLibro": "MATERIAL DIDÁCTICO",
+    "fechaCreacionEtiquetaLibro": "2020-06-26T04:47:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 20,
+    "tituloEtiquetaLibro": "INFORMÁTICA: CUESTIONES GENERALES",
+    "fechaCreacionEtiquetaLibro": "2020-06-26T04:47:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 21,
+    "tituloEtiquetaLibro": "Biblioteca del programador",
+    "fechaCreacionEtiquetaLibro": "2020-06-26T05:11:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 23,
+    "tituloEtiquetaLibro": "REDES",
+    "fechaCreacionEtiquetaLibro": "2020-06-26T05:22:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 24,
+    "tituloEtiquetaLibro": "COMUNICACIONES INFORMÁTICAS",
+    "fechaCreacionEtiquetaLibro": "2020-06-26T05:22:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 25,
+    "tituloEtiquetaLibro": "Apicultura (cría de abejas)",
+    "fechaCreacionEtiquetaLibro": "2020-06-26T05:24:00-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 26,
+    "tituloEtiquetaLibro": "Programación Lineal",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T10:30:35.894387-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 27,
+    "tituloEtiquetaLibro": "Redes Sociales",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T10:44:28.412116-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 28,
+    "tituloEtiquetaLibro": "Facebook",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T10:44:42.183435-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 29,
+    "tituloEtiquetaLibro": "Revolución",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T10:45:07.12142-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 7,
+    "tituloEtiquetaLibro": "Revolucion",
+    "fechaCreacionEtiquetaLibro": "2020-06-18T11:21:00-05:00",
+    "estadoEtiquetaLibro": false
+  },
+  {
+    "idEtiquetaLibro": 30,
+    "tituloEtiquetaLibro": "Universitaria",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T12:25:07.933792-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 31,
+    "tituloEtiquetaLibro": "Administracion",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T12:29:27.283045-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 32,
+    "tituloEtiquetaLibro": "Siglo XXI",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T13:03:10.057781-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 33,
+    "tituloEtiquetaLibro": "Sicilia",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T13:03:40.930733-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 34,
+    "tituloEtiquetaLibro": "Actualidad Europea",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T13:03:56.232414-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 35,
+    "tituloEtiquetaLibro": "Dramas Sociales",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T13:05:07.074714-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 36,
+    "tituloEtiquetaLibro": "Salvo Montalbano",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T13:05:34.045257-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 37,
+    "tituloEtiquetaLibro": "Biblioteca Carlos Ruiz Zafón",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T13:14:58.554403-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 38,
+    "tituloEtiquetaLibro": "Europa",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T13:21:15.662909-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 39,
+    "tituloEtiquetaLibro": "Intantiles",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:17:09.314712-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 40,
+    "tituloEtiquetaLibro": "LITERATURAS",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:25:09.943053-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 41,
+    "tituloEtiquetaLibro": "Edad de Piedra",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:38:29.134584-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 42,
+    "tituloEtiquetaLibro": "la historia de la civilización",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:38:40.613642-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 43,
+    "tituloEtiquetaLibro": "Tecnología Moderna",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:40:47.415589-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 44,
+    "tituloEtiquetaLibro": "Artesanía Antigua",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:42:38.733881-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 45,
+    "tituloEtiquetaLibro": "Ingeniería",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:52:26.005518-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 46,
+    "tituloEtiquetaLibro": "Ingeniero",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T15:52:42.865047-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 47,
+    "tituloEtiquetaLibro": "Cerebro",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:06:30.128691-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 48,
+    "tituloEtiquetaLibro": "Concentracion",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:06:40.4935-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 49,
+    "tituloEtiquetaLibro": "Memoria",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:06:50.839941-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 50,
+    "tituloEtiquetaLibro": "ASentir",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:07:23.131302-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 51,
+    "tituloEtiquetaLibro": "proyectos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:12:28.798716-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 52,
+    "tituloEtiquetaLibro": "robot",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:12:45.813357-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 53,
+    "tituloEtiquetaLibro": "IDEAKA",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:15:43.719956-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 54,
+    "tituloEtiquetaLibro": "Enciclopedias",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:21:19.990774-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 55,
+    "tituloEtiquetaLibro": "Atlas",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:21:32.154419-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 56,
+    "tituloEtiquetaLibro": "Diccionarios",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:21:54.159022-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 57,
+    "tituloEtiquetaLibro": "Niños",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:27:47.054581-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 58,
+    "tituloEtiquetaLibro": "Niñas",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:27:54.039145-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 59,
+    "tituloEtiquetaLibro": "teorías",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:38:12.388444-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 60,
+    "tituloEtiquetaLibro": "descubrimientos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:38:18.076451-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 61,
+    "tituloEtiquetaLibro": "conceptos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:38:25.691005-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 62,
+    "tituloEtiquetaLibro": "EN SENGUNDOS",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:44:08.490965-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 64,
+    "tituloEtiquetaLibro": "Edad de interés: a partir de 8 años",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:49:19.026192-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 65,
+    "tituloEtiquetaLibro": "ACADEMIA DE INGENIERÍA",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:50:37.607578-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 63,
+    "tituloEtiquetaLibro": "INFANTIL Y JUVENIL: NO FICIÓN GENERAL",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T16:49:10.498855-05:00",
+    "estadoEtiquetaLibro": false
+  },
+  {
+    "idEtiquetaLibro": 66,
+    "tituloEtiquetaLibro": "Mente, cuerpo y espíritu: pensamiento y práctica",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:03:22.960718-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 67,
+    "tituloEtiquetaLibro": "Mente",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:04:29.61196-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 68,
+    "tituloEtiquetaLibro": "Cuerpo",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:04:36.091961-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 69,
+    "tituloEtiquetaLibro": "Espiritu",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:04:43.27889-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 70,
+    "tituloEtiquetaLibro": "Espiritualidad",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:05:00.052581-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 71,
+    "tituloEtiquetaLibro": "Conceptos de Aprendizaje",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:11:47.036697-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 72,
+    "tituloEtiquetaLibro": "Educabebés",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:12:02.506515-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 73,
+    "tituloEtiquetaLibro": "Manual práctico",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:22:38.822525-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 74,
+    "tituloEtiquetaLibro": "Divulgación científica",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:27:25.382213-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 75,
+    "tituloEtiquetaLibro": "Qué sabemos de",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:29:33.625512-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 76,
+    "tituloEtiquetaLibro": "tabla periódica",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:30:39.147987-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 77,
+    "tituloEtiquetaLibro": "Aplicaciones industriales",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:37:13.489713-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 78,
+    "tituloEtiquetaLibro": "de investigación científica",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:37:52.802396-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 79,
+    "tituloEtiquetaLibro": "innovación tecnológica",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:37:55.71006-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 80,
+    "tituloEtiquetaLibro": "MATLAB",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:43:50.738648-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 81,
+    "tituloEtiquetaLibro": "Optimización",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:43:55.213447-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 82,
+    "tituloEtiquetaLibro": "Algoritmos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:44:09.691999-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 83,
+    "tituloEtiquetaLibro": "Procesos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T17:53:18.631897-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 84,
+    "tituloEtiquetaLibro": "Tipografia",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:13:23.541137-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 85,
+    "tituloEtiquetaLibro": "Contruccion",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:13:30.662433-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 86,
+    "tituloEtiquetaLibro": "MATERIALES",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:24:00.869093-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 87,
+    "tituloEtiquetaLibro": "Analisis Estructural",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:24:09.646799-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 88,
+    "tituloEtiquetaLibro": "Mecánica de Fluidos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:33:17.336911-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 89,
+    "tituloEtiquetaLibro": "Sonido",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:40:22.163506-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 90,
+    "tituloEtiquetaLibro": "telecomunicaciones",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:54:56.334896-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 91,
+    "tituloEtiquetaLibro": "Modelos aleatorios",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T18:58:23.521467-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 92,
+    "tituloEtiquetaLibro": "Problemas resueltos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T19:06:50.67165-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 93,
+    "tituloEtiquetaLibro": "lenguaje C",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T19:07:00.037812-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 94,
+    "tituloEtiquetaLibro": "bioprocesos",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T19:12:34.966506-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 95,
+    "tituloEtiquetaLibro": "Biologia",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T19:12:56.928825-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 96,
+    "tituloEtiquetaLibro": "Guia Practica",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T19:33:05.678744-05:00",
+    "estadoEtiquetaLibro": true
+  },
+  {
+    "idEtiquetaLibro": 97,
+    "tituloEtiquetaLibro": "Exportacion",
+    "fechaCreacionEtiquetaLibro": "2020-07-08T19:44:45.226005-05:00",
+    "estadoEtiquetaLibro": true
+  }
+]

@@ -1,0 +1,42 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Gestión de Valoración</small>
+                    </h1>
+                </div>
+            <a href="{% url 'registrarRating' %}" type="button" class="btn btn-sm btn-warning">Nuevo</a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Libro</th>
+                            <th>Valoración</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% if object_list %}
+                        {% for obj in object_list %}
+                        <tr>
+                            <td>{{obj.usuario_Rating}}</td>
+                            <td>{{obj.libro_Rating}}</td>
+                            <td>{{obj.estrellasRating}}</td>
+                            <td><a href="{% url 'modificarRating' obj.id %}" class="btn btn-sm btn-primary">Modificar</a></td>
+                            <td><a href="{% url 'eliminarRating' obj.id %}" class="btn btn-sm btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                      {% else %}
+                        <tr><td>No hay Ratings registrados</td></tr>
+                      {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock%}

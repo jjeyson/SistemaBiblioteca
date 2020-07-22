@@ -5,6 +5,7 @@ import uuid # Requerida para las instancias de libros únicos
 from time import gmtime, strftime
 from django.utils.timezone import now
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class UsuarioManager(BaseUserManager):
     def create_user(self, email,username,nombreUsuario,apellidosUsuario,password=None):
@@ -54,7 +55,7 @@ class Usuario(AbstractBaseUser):
     objects = UsuarioManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'nombreUsuario','apellidosUsuario']
+    REQUIRED_FIELDS = ['email', 'nombreUsuario']
 
     def __str__(self):
         return f'{self.nombreUsuario},{self.apellidosUsuario}'
@@ -207,6 +208,7 @@ class AutorLibro(models.Model):
         return '%s %s' % (self.nombreAutorLibro,self.apellidosAutorLibro)
 
 
+
 class Libro(models.Model):
     idLibro  = models.AutoField(primary_key=True, help_text="ID único para este libro")
     codigoLibro = models.CharField(max_length=20,verbose_name='Codigo de Biblioteca' , blank=True)
@@ -235,16 +237,33 @@ class Libro(models.Model):
 
     def __str__(self):
         return self.tituloLibro
-
-    """def get_absolute_url(self):
-        return reverse('Detalle_Libro', kwargs={'lawyer_slug': self.lawyer_slug})
-    def get_absolute_url(self):
+    def n_of_rating(self):
+        ratings = Rating.objects.filter(libro_Rating = self)
+        return len(ratings)
+    """def avg_rating(self):
+        sum=0
+        ratings = Rating.objects,filter(movie=self)
+        for rating in ratings
+            sum+=rating
+        if len(ratings) > 0:
+            return sum/len(ratings)
+        else:
+            return 0"""
+    #def get_absolute_url(self):
+    #    return reverse('Detalle_Libro', kwargs={'lawyer_slug': self.lawyer_slug})
+    #def get_absolute_url(self):
 
         #Devuelve el URL a una instancia particular de Book
 
-        return reverse('Detalle-Libro', args=[str(self.idLibro)])"""
+        #return reverse('Detalle-Libro', args=[str(self.idLibro)])
 
-
+class Rating(models.Model):
+    #idRating = models.Autofield(primary_key=True, help_text="ID único para este rating")
+    usuario_Rating = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True)
+    libro_Rating = models.ForeignKey(Libro, on_delete=models.SET_NULL, null=True)
+    estrellasRating = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)], verbose_name='Valoracion')
+    fechaCreacionRating = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Creación')
+    estadoRating = models.BooleanField(verbose_name='Activo', default=True)
 
 class LibroInstancia(models.Model):
     idLibroInstancia = models.AutoField(primary_key=True, help_text="ID único para esta publicación")
@@ -269,7 +288,7 @@ class LibroInstancia(models.Model):
         """
         String para representar el Objeto del Modelo
         """
-        return '%s (%s)' % (self.idLibroInstancia,self.libro_LibroInstancia)
+        return '%s' % (self.libro_LibroInstancia)
 
 class Reservacion(models.Model):
     idReservacion = models.AutoField(primary_key=True, help_text="ID único para esta publicación")

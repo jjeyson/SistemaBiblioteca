@@ -1,18 +1,25 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from GestionPrestamo.models import Libro, Lector, Bibliotecario, EtiquetaLibro, Editorial, Reservacion, Idioma, LibroInstancia, TipoUsuario, GeneroLibro, AutorLibro, Pais, Usuario
+from GestionPrestamo.models import Libro, Lector, Bibliotecario, EtiquetaLibro, Editorial, Reservacion, Idioma, LibroInstancia, TipoUsuario, GeneroLibro, AutorLibro, Pais, Usuario, Rating
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.timezone import now
 from datetime import datetime
-from GestionPrestamo.forms import Form_RegistroLibro, Form_RegistroLector, Form_RegistroBibliotecario, Form_RegistroEtiquetaLibro, Form_RegistroIdioma, Form_RegistroEditorial, Form_RegistroReservacion, Form_RegistroLibroInstancia, Form_RegistroTipoUsuario, Form_RegistroGeneroLibro, Form_RegistroAutorLibro, Form_RegistroPais, Form_RegistroUsuario #, CustomUserForm
-from django.db.models import Q
+from GestionPrestamo.forms import Form_RegistroLibro, Form_RegistroLector, Form_RegistroBibliotecario, Form_RegistroEtiquetaLibro, Form_RegistroIdioma, Form_RegistroEditorial, Form_RegistroReservacion, Form_RegistroLibroInstancia, Form_RegistroTipoUsuario, Form_RegistroGeneroLibro, Form_RegistroAutorLibro, Form_RegistroPais, Form_RegistroUsuario, Form_RegistroRating #, CustomUserForm
+from django.db.models import Q, Count
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, UpdateView, CreateView, View
 from django.urls import reverse_lazy
 from GestionPrestamo.mixins import SuperUsuarioMixin
+from GestionPrestamo.services import get_username
+from rest_framework import viewsets
+from rest_framework.response import Response
+from .serializers import LibroSerializer,RatingSerializer, UsuarioSerializer, ReservacionSerializer, LibroInstanciaSerializer, Libro2Serializer
+from django.contrib.auth.models import User
+import requests
+from GestionPrestamo.modeloRecomendacion import traer_Recomendados
 # Create your views here.
 FORMATO_LIBRO=(
         ('e', 'E-book'),
@@ -22,19 +29,17 @@ FORMATO_LIBRO=(
 
 class Inicio(LoginRequiredMixin,TemplateView):
     template_name = 'GestionPrestamo/index.html'
+    def get_context_data(self, **kwargs):
+        top_nuevos = Libro.objects.filter(fechaCreacionLibro__gte=Libro.objects.order_by('-fechaCreacionLibro')[3].fechaCreacionLibro)
+        top_repeated = Reservacion.objects.values('libro_Reservacion').annotate(Count('idReservacion')).order_by().filter(idReservacion__count__gt=0)[:5]
+        objs = LibroInstancia.objects.all()
+        context = super(Inicio, self).get_context_data(**kwargs)
+        context['objs'] = objs
+        context['top_nuevos'] = top_nuevos
+        context['top_repeated'] = top_repeated
+        return context
 
-@login_required
-def busquedaLibro(request):
-    #usuario = Usuario.objects.filter(nombreUsuario = 'EDIT YULIANA')
-    querys = (Q(tituloLibro__icontains='negocios') | Q(resumenLibro__icontains='negocios')|Q(tituloLibro__icontains='inteligencia') | Q(resumenLibro__icontains='inteligencia'))
 
-    libros = Libro.objects.filter(querys)
-    objs = Libro.objects.all()
-    contexto = {
-    'libros':libros,
-    'objs':objs
-    }
-    return render(request, "GestionPrestamo/busquedaLibro.html",contexto)
 
 class GestionLibro(SuperUsuarioMixin,ListView):
     model: Libro
@@ -42,13 +47,17 @@ class GestionLibro(SuperUsuarioMixin,ListView):
     queryset = Libro.objects.filter(estadoLibro = True)
     paginate_by = 10
     def get_queryset(self):
-        queryset = super(GestionLibro, self).get_queryset()
+        queryset = super(GestionLibro, self).get_queryset().order_by('-fechaCreacionLibro')
         return queryset.filter(estadoLibro=True)
 
 class GestionUsuario(SuperUsuarioMixin, ListView):
     model: Usuario
     template_name = 'GestionPrestamo/gestionUsuario.html'
-    queryset = Usuario.objects.filter(estadoUsuario = True)
+    queryset = Usuario.objects.filter(estadoUsuario = True).order_by('-fechaCreacionUsuario')
+    paginate_by = 10
+    def get_queryset(self):
+        queryset = super(GestionUsuario, self).get_queryset()
+        return queryset.filter(estadoUsuario=True).order_by('-fechaCreacionUsuario')
 
 class Administracion(SuperUsuarioMixin,TemplateView):
     template_name='GestionPrestamo/administracion.html'
@@ -73,6 +82,14 @@ class GestionReservacion(SuperUsuarioMixin, ListView):
     template_name = 'GestionPrestamo/gestionReservacion.html'
     queryset = Reservacion.objects.filter(estadoReservacion = True)
 
+class GestionReservacionUsuario(LoginRequiredMixin, ListView):
+    model: Reservacion
+    template_name = 'GestionPrestamo/reservacionUsuario.html'
+    queryset = Reservacion.objects.filter(estadoReservacion = True)
+    """def get_queryset(self):
+        queryset = super(GestionReservacion, self).get_queryset()
+        return queryset.filter(estadoReservacion=True,usuario_reservacion = self.user.id)"""
+
 class GestionIdioma(SuperUsuarioMixin, ListView):
     model: Idioma
     template_name = 'GestionPrestamo/gestionIdioma.html'
@@ -81,7 +98,7 @@ class GestionIdioma(SuperUsuarioMixin, ListView):
 class GestionLibroInstancia(SuperUsuarioMixin, ListView):
     model: LibroInstancia
     template_name = 'GestionPrestamo/gestionLibroInstancia.html'
-    queryset = LibroInstancia.objects.filter(estadoLibroInstancia = True)
+    queryset = LibroInstancia.objects.filter(estadoLibroInstancia = True).order_by('-fechaCreacionLibroInstancia')
 
 class GestionTipoUsuario(SuperUsuarioMixin, ListView):
     model: TipoUsuario
@@ -102,6 +119,11 @@ class GestionPais(SuperUsuarioMixin, ListView):
     model: Pais
     template_name = 'GestionPrestamo/gestionPais.html'
     queryset = Pais.objects.filter(estadoPais = True)
+
+class GestionRating(SuperUsuarioMixin, ListView):
+    model: Rating
+    template_name = 'GestionPrestamo/gestionRating.html'
+    queryset = Rating.objects.filter(estadoRating = True)
 
 class Gracias(TemplateView):
     template_name='gracias.html'
@@ -158,37 +180,6 @@ class RegistrarLibro(SuperUsuarioMixin, LoginRequiredMixin, CreateView):
         libro.save()
         return redirect('gestionLibro')
 
-@login_required
-def registrarLibro(request):
-    cantidadLibros=(0,1,2,3,4,5,6,7,8,9,10)
-    if request.method == 'GET':
-        form = Form_RegistroLibro()
-        myDate = datetime.now()
-        formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
-        form.fields['fechaCreacionLibro'].initial = formatedDate
-
-        contexto = {
-            'form' : form,
-            'cantidadLibros' : cantidadLibros,
-        }
-    else:
-        form = Form_RegistroLibro(request.POST)
-        #formInstancia = Form_RegistroLibroInstancia()
-        contexto = {
-            'form' : form,
-        }
-        if form.is_valid():
-            form.save()
-            #libro = Libro.objects.latest('fechaCreacionLibro')
-            #for i in [0,1,2,3,4,5,6,7,8,9,10]:
-            #    formInstancia.fields['estadoPrestamoLibroInstancia'].initial = 'd'
-            #    formInstancia.fields['libro_LibroInstancia'].initial = libro
-
-            #formInstancia.save()
-            return redirect('gestionLibro')
-
-    return render(request, "GestionPrestamo/registroLibro.html", contexto)
-
 
 class ModificarLibro(LoginRequiredMixin,UpdateView):
     myDate = datetime.now()
@@ -216,7 +207,7 @@ def eliminarLibro(request, idLibro):
     libro.estadoLibro = False
     libro.save()
     return redirect('gestionLibro')
-@login_required
+
 def registrarUsuario(request):
     if request.method == 'GET':
         form = Form_RegistroUsuario()
@@ -478,6 +469,10 @@ def registrarReservacion(request):
         myDate = datetime.now()
         formatedDate = myDate.strftime("%Y-%m-%d")
         formRegistrarReservacion.fields['fechaEmisionReservacion'].initial = formatedDate
+        #lib = Libro.objects.filter(idLibro = idLibro)
+        #for obj in lib:
+            #formRegistrarReservacion.fields['libro_Reservacion'].initial = obj
+        formRegistrarReservacion.fields['usuario_reservacion'].initial = request.user
         contexto = {
             'formRegistrarReservacion' : formRegistrarReservacion
         }
@@ -488,7 +483,7 @@ def registrarReservacion(request):
         }
         if formRegistrarReservacion.is_valid():
             formRegistrarReservacion.save()
-            return redirect('gestionReservacion')
+            return redirect('GestionReservacionUsuario')
 
     return render(request, "GestionPrestamo/registroReservacion.html", contexto)
 @login_required
@@ -757,3 +752,143 @@ def eliminarPais(request, idPais):
     obj.estadoPais = False
     obj.save()
     return redirect('gestionPais')
+
+@login_required
+def registrarRating(request, idLibro):
+    if request.method == 'GET':
+        form = Form_RegistroRating()
+        myDate = datetime.now()
+        formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
+        form.fields['fechaCreacionRating'].initial = formatedDate
+        lib =  Libro.objects.filter(idLibro = idLibro)
+        form.fields['usuario_Rating'].initial = request.user
+        for staff in lib:
+            form.fields['libro_Rating'].initial = staff
+
+        contexto = {
+            'form' : form
+        }
+    else:
+        form = Form_RegistroRating(request.POST)
+        contexto = {
+            'form' : form
+        }
+        print(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('busquedaLibro')
+
+    return render(request, "GestionPrestamo/registroRating.html", contexto)
+
+@login_required
+def modificarRating(request, id):
+    obj = Rating.objects.get(id= id)
+    if request.method == 'GET':
+        form = Form_RegistroRating(instance=obj)
+        myDate = datetime.now()
+        formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
+        form.fields['fechaCreacionRating'].initial = formatedDate
+        contexto = {
+            'form' : form
+        }
+    else:
+        form = Form_RegistroRating(request.POST, instance= obj)
+        contexto = {
+            'form' : form
+        }
+        if form.is_valid():
+            form.save()
+            return redirect('gestionRating')
+    return render(request, "GestionPrestamo/registroRating.html", contexto)
+
+@login_required
+def eliminarRating(request, id):
+    obj = Rating.objects.get(id= id)
+    obj.estadoRating = False
+    obj.save()
+    return redirect('gestionRating')
+
+
+
+
+
+
+
+
+
+
+def hello_user(requests):
+    context = {
+        'name': get_username()
+    }
+    return render(requests, 'Algoritmo/hello_user.html', context)
+#Si así lo deseamos poder enviar parametros a nuestra petición.
+
+def hello_user(requests):
+
+
+    context = {
+        'name': get_username(params)
+    }
+    return render(requests, 'Algoritmo/hello_user.html', context)
+
+@login_required
+def busquedaLibro(request):
+    # url = "http://127.0.0.1:8001/libros/default/call/json/load_ratings"
+    # data = requests.get(url)
+    # print(data.text,request.user.nombreUsuario)
+    # params = { 'a':5,'b':6 }
+    #
+    # context = {
+    #     'name': get_username(params)
+    # }
+    list =[]
+    list = traer_Recomendados(request)
+    querys = (Q(tituloLibro__icontains='negocios') | Q(resumenLibro__icontains='negocios')|Q(tituloLibro__icontains='inteligencia') | Q(resumenLibro__icontains='inteligencia'))
+
+    contexto = {
+    'libros':list,
+    }
+    return render(request, "GestionPrestamo/busquedaLibro.html",contexto)
+
+
+
+
+
+
+
+
+class LibroViewSet(viewsets.ModelViewSet):
+    serializer_class = LibroSerializer
+    queryset = Libro.objects.filter(estadoLibro = True)
+    def list(self, request):
+        print(request.user.id)
+        queryset = Libro.objects.filter(estadoLibro = True)
+        serializer = LibroSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class RatingViewSet(viewsets.ModelViewSet):
+    serializer_class = RatingSerializer
+    queryset = Rating.objects.filter(usuario_Rating = 3)
+    def list(self, request):
+        #queryset = Rating.objects.filter(usuario_Rating = request.user.id)
+        queryset = Rating.objects.filter(estadoRating = True)
+        serializer = RatingSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class UsuarioViewSet(viewsets.ModelViewSet):
+    serializer_class = UsuarioSerializer
+    queryset = Usuario.objects.filter(id = 3)
+    def list(self, request):
+        queryset = Usuario.objects.filter(id = request.user.id)
+        serializer = UsuarioSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class LibrosReservadosViewSet(viewsets.ModelViewSet):
+    serializer_class = ReservacionSerializer
+    res = Reservacion.objects.filter(libro_Reservacion__libro_LibroInstancia__estadoLibro=True, usuario_reservacion = 3)
+    queryset = res
+    def list(self, request):
+        queryset = Reservacion.objects.filter(libro_Reservacion__libro_LibroInstancia__estadoLibro=True, usuario_reservacion = request.user.id)
+        serializer = ReservacionSerializer(queryset, many=True)
+        return Response(serializer.data)

@@ -1,0 +1,27 @@
+{% extends "GestionPrestamo/masterPage.html" %}
+
+{% load static %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div align="center">
+                    <h1 class="page-header">
+                        <small>Registro del Valoración</small>
+                    </h1>
+                </div>
+            <a href="{% url 'gestionRating' %}" class="btn btn-primary"> Regresar a Lista</a>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group has-success">
+                    <table>
+                        <table>
+                            {{ form.as_table }}
+                        </table>
+
+                        <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                    </table>
+                </div>
+            </form>
+        </div>
+{% endblock%}
